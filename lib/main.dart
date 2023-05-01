@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
-import 'package:provider/provider.dart';
 
 import 'general/widgets/widgets.dart';
 
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         textTheme:
             Theme.of(context).textTheme.apply(
-              bodyColor: Colors.black, //<-- SEE HERE
+              bodyColor: Colors.black,
               displayColor: Colors.black,
         ),
       ), 

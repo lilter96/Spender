@@ -15,7 +15,7 @@ class _WalletsScreenState extends State<WalletsScreen> {
       appBar: const WalletsAppBar(),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
+        children: const [
           WalletBalanceWidget(),
           WalletCashflowWidget()
         ],
