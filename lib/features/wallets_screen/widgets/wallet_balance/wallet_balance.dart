@@ -13,7 +13,7 @@ class _WalletBalanceWidget extends State<WalletBalanceWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: <Widget>[
+        children: const <Widget>[
           Text('-555 BYN'),
           Text('Wallet Balance')
         ]
