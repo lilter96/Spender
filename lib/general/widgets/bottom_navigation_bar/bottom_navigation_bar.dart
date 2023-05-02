@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/features/budgets_screen/view/budgets_screen.dart';
 
 import 'package:test_app/features/wallets_screen/view/view.dart';
 
@@ -20,10 +21,7 @@ class _BottomNavigationBarWidget extends State<BottomNavigationBarWidget> {
       style: optionStyle,
     ),
     WalletsScreen(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    BudgetsScreen(),
     Text('4'),
     Text('5')
   ];
