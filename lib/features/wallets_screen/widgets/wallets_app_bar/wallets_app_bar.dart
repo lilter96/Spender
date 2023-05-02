@@ -54,34 +54,38 @@ class _WalletsAppBarState extends State<WalletsAppBar> {
       ),
       child: AppBar(
         toolbarHeight: kToolbarHeight * 2.5,
+        centerTitle: true,
         title: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(Icons.arrow_back_ios),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 150, 0),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: const TextSpan(
-                        text: "Cash Wallet",
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '\nTransactions',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14
-                            )
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.arrow_back_ios, size: 20),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: const TextSpan(
+                            text: "Cash Wallet",
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: '\nTransactions',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14
+                                )
+                              )
+                            ]
                           )
-                        ]
-                      )
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
