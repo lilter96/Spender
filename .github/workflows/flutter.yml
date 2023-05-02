@@ -20,9 +20,10 @@ jobs:
 
     - name: Set up Flutter
       run: |
-        curl -o- https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.5.0-stable.zip -sSfL | zcat >flutter_sdk.zip
+        curl -o flutter_sdk.zip -L https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.5.0-stable.zip
         unzip -qq flutter_sdk.zip
         echo "$(pwd)/flutter/bin" >> $GITHUB_PATH
+
 
     - name: Install dependencies
       run: flutter pub get
