@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../budgets_modal_bottom_sheet/budgets_modal_bottom_sheet.dart';
+
 class BudgetsDefaultScreenWidget extends StatefulWidget {
   const BudgetsDefaultScreenWidget({super.key});
 
@@ -38,8 +40,19 @@ class _BudgetsDefaultScreenWidgetState
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 24, 211, 155)),
           ),
-          onPressed: () {},
-          child: const Text('Create Your First Budget', style: TextStyle(color: Colors.white),) ,
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (BuildContext context) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: const BudgetModalBottomSheetWidget(),
+                );
+              },
+            );  
+          },
+          child: const Text('Create Your First Budget', style: TextStyle(color: Colors.white),),
         ),
       )
     ]);
