@@ -1,0 +1,52 @@
+name: Flutter CI
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-java@v2
+      with:
+        java-version: '12'
+        distribution: 'adopt'
+
+    - name: Set up Flutter
+      run: |
+        curl -o flutter_sdk.zip -L https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_3.7.12-stable.zip
+        unzip -qq flutter_sdk.zip
+        echo "$(pwd)/flutter/bin" >> $GITHUB_PATH
+
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build iOS
+      run: |
+        cd ios
+        sudo gem install cocoapods
+        pod install
+        cd ..
+        flutter build ios --release --no-codesign
+        
+    - name: Create artifacts directory
+      run: |
+        mkdir artifacts
+        mkdir artifacts/ios
+      working-directory: ${{github.workspace}}
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: iOS build
+        path: |
+          artifacts/ios/*.ipa
+          artifacts/ios/*.xcarchive
+      if: success()
