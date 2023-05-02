@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
-
-final List<String> currencies = [
-  'USD',
-  'EUR',
-  'GBP',
-  'JPY',
-  'AUD',
-  'CAD',
-  'CHF',
-  'CNY',
-  'SEK',
-  'NZD',
-];
 
 class CurrencyPicker extends StatefulWidget {
-  const CurrencyPicker({super.key});
+  final Function(String) onSelectedCurrency;
+  const CurrencyPicker({Key? key, required this.onSelectedCurrency})
+      : super(key: key);
 
   @override
   State<CurrencyPicker> createState() => _CurrencyPickerState();
@@ -23,18 +11,37 @@ class CurrencyPicker extends StatefulWidget {
 
 class _CurrencyPickerState extends State<CurrencyPicker> {
   String _selectedCurrency = 'USD';
+  final List<String> currencies = [
+    'USD',
+    'EUR',
+    'GBP',
+    'JPY',
+    'AUD',
+    'CAD',
+    'CHF',
+    'CNY',
+    'SEK',
+    'NZD',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    currencies.sort();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
+      appBar: AppBar(
+        surfaceTintColor: Colors.white,
         automaticallyImplyLeading: false,
         title: const Text('Select currency'),
         actions: <Widget>[
           Container(
-            width: 40,
-            height: 40,
-            margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+            width: 34,
+            height: 34,
+            margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
             decoration: const BoxDecoration(
               color: Colors.grey,
               shape: BoxShape.circle,
@@ -43,36 +50,27 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
               icon: const Icon(Icons.check),
               onPressed: () {},
               color: Colors.white,
+              iconSize: 17, // set the size of the icon to 20
             ),
           ),
         ],
       ),  
-      // body: Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       Text(
-      //         'Selected Currency: $_selectedCurrency',
-      //         style: const TextStyle(fontSize: 24),
-      //       ),
-      //       const SizedBox(height: 20),
-      //       ElevatedButton(
-      //         onPressed: () => _showCurrencyPicker(),
-      //         child: const Text('Select Currency'),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+      body: ListView.builder(
+        itemCount: currencies.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(currencies[index]),
+           onTap: () {
+              setState(() {
+                _selectedCurrency = currencies[index];
+              });
+              widget.onSelectedCurrency(_selectedCurrency);
+              Navigator.of(context).pop(_selectedCurrency);
+            },
+            selected: _selectedCurrency == currencies[index],
+          );
+        },
+      ),
     );
   }
-
-// void _showCurrencyPicker() {
-//     showMaterialScrollPicker(
-//       context: context,
-//       title: 'Choose Currency',
-//       items: currencies,
-//       selectedItem: _selectedCurrency,
-//       onChanged: (value) => setState(() => _selectedCurrency = value),
-//     );
-//   }
 }

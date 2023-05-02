@@ -24,14 +24,13 @@ class _BudgetsDefaultScreenWidgetState
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       )),
-      const Padding(
-        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-        child: Center(
-          child: Text(
-            'Start saveing money be creating budgets and we will help\nyou stick to it',
-            style: TextStyle(color: Colors.grey),
-            textAlign: TextAlign.center,   
-          ),
+      Container (
+      padding: const EdgeInsets.all(16.0),
+      width: MediaQuery.of(context).size.width,
+      child: Column (
+          children: const <Widget>[
+            Text ('Start saving money by creating budgets and we will help you stick to it', textAlign: TextAlign.center),
+          ],
         ),
       ),
       SizedBox(
@@ -42,12 +41,15 @@ class _BudgetsDefaultScreenWidgetState
           ),
           onPressed: () {
             showModalBottomSheet(
-              context: context,
+              context: context,             
               isScrollControlled: true,
               builder: (BuildContext context) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: const BudgetModalBottomSheetWidget(),
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(16.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: const BudgetModalBottomSheetWidget(),
+                  ),
                 );
               },
             );  
