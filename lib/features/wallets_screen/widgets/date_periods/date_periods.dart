@@ -77,9 +77,10 @@ class _SelectedDateFrameWidget extends State<SelectedDateFrameWidget> {
       period = [];
     }
 
+    var screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
       height: 25, // card height
-      width: 400,
+      width: screenWidth * 0.91,
       child: PageView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: countOfFrames,
@@ -110,10 +111,7 @@ class _SelectedDateFrameWidget extends State<SelectedDateFrameWidget> {
                 }
               },
                 child: Card(
-                  elevation: 6,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+                  elevation: 0,
                   color: Colors.white,
                   shadowColor: Colors.white,
                   surfaceTintColor: Colors.white,

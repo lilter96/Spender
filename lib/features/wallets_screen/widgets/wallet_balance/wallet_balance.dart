@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class WalletBalanceWidget extends StatefulWidget {
   const WalletBalanceWidget({super.key});
 
@@ -14,7 +13,16 @@ class _WalletBalanceWidget extends State<WalletBalanceWidget> {
     return Container(
       child: Column(
         children: const <Widget>[
-          Text('-555 BYN'),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+            child: Text(
+              '-555 BYN',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
           Text('Wallet Balance')
         ]
       )
