@@ -1,17 +1,29 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-
 import '../currency_picker/currency_picker.dart';
 
 class BudgetModalBottomSheetWidget extends StatefulWidget {
   const BudgetModalBottomSheetWidget({super.key});
+
   @override
   State<BudgetModalBottomSheetWidget> createState() => _BudgetModalBottomSheetWidgetState();
 }
 
+
 class _BudgetModalBottomSheetWidgetState extends State<BudgetModalBottomSheetWidget> {
   String _selectedCurrency = 'USD';
+  final _currencyFieldController = TextEditingController();
+
+   @override
+  void initState() {
+    super.initState();
+    _currencyFieldController.text = _selectedCurrency;
+  }
+
+  @override
+  void dispose() {
+    _currencyFieldController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +94,7 @@ class _BudgetModalBottomSheetWidgetState extends State<BudgetModalBottomSheetWid
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.green,
                   ),
+                  onPressed: null,
                   child: SizedBox(
                     width: 95,
                     child: TextFormField(
@@ -90,44 +103,46 @@ class _BudgetModalBottomSheetWidgetState extends State<BudgetModalBottomSheetWid
                         borderSide: BorderSide(color: Colors.black),
                         ),
                         labelText: 'Currency',
-                        labelStyle: TextStyle(
-                          color: Colors.black,
+                        focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromARGB(255, 24, 211, 155), width: 2),
                         ),
                         suffixIcon: Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),
                       ),
-                      initialValue: _selectedCurrency,
-                      readOnly: false,
-                      enabled: false,
-                      style: const TextStyle(
+                      controller: _currencyFieldController,
+                      readOnly: true,
+                      onTap: () async {
+                        final selectedCurrency = await showModalBottomSheet<String>(context: context,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(16.0),
+                            child: SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.5,
+                              child: CurrencyPicker(
+                                onSelectedCurrency:
+                                _handleSelectedCurrency,
+                              ),
+                            ),
+                          );
+                        },
+                        );
+                        if (selectedCurrency != null) {
+                          setState(() {
+                            _selectedCurrency = selectedCurrency;
+                            _currencyFieldController.text =
+                                _selectedCurrency;
+                          });
+                        }
+                      },
+                       style: const TextStyle(
                         color: Colors.black,
                       ),
                     ),
                   ),
-                  onPressed: () async {
-                    final selectedCurrency = await showModalBottomSheet<String>(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (BuildContext context) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(16.0),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.5,
-                            child: CurrencyPicker(onSelectedCurrency: _handleSelectedCurrency,),
-                          )
-                        );
-                      },
-                    );    
-                    
-                    if (selectedCurrency != null) {
-                      setState(() {
-                        _selectedCurrency = selectedCurrency;
-                      });
-                      
-                    }    
-                  } 
                 ),
               ],
             ),
